@@ -3,8 +3,6 @@
 import os
 import sys
 
-#test from aj
-
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
     try:
