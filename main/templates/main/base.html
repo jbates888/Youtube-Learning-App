@@ -1,21 +1,8 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style type="text/css"></style>
-      /* Style page content */
-      .main {
-      margin-left: 160px; /* Same as the width of the sidebar */
-      padding: 0px 10px;
-      }
-      
-      /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font
-      size) */
-      @media screen and (max-height: 450px) {
-      .sidenav {padding-top: 15px;}
-      .sidenav a {font-size: 18px;}
-      }
-    </style>
-
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +12,8 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
       
       <script src="https://kit.fontawesome.com/1575f87ca9.js" crossorigin="anonymous"></script>
-      
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
       <title>{% block title %}Learning app{% endblock %}</title>
   </head>
 
@@ -57,13 +45,15 @@
         <div class="col-8">
           <h1 class="mt-2">Learning App</h1>
           <hr class="mt-0 mb-4">
+          <h1>HIIIII</h1>
           {% block content %}
+          
           {% endblock %}
         </div>
       </div>
     </div>
 
-    </div>
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
