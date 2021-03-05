@@ -7,9 +7,23 @@ Home
 {% block content %}
     <h3>What do you want to learn?</h3>
     <br>
-    <div class="input-group">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-          aria-describedby="search-addon" />
-        <button type="button" class="btn btn-outline-primary">search</button>
-      </div>
+    <form action = "" method = "get">
+        <input id="search" type="text" name="search">
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <div class="row">
+        {% for v in videos %}
+        {% cycle "<div class='row'>" "" %}
+        <div class="col-sm-6">
+            <div class="card border-primary mb-3">
+                <div class="card-body">
+                   <iframe width="600" height="400" style="border: 5px solid blue" src="{{v}}"></iframe>
+                    <br>
+                   <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+        {% cycle "" "</div>" %}
+        {% endfor %}
 {% endblock %}
