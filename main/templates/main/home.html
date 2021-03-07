@@ -1,29 +1,44 @@
 {% extends 'main/base.html' %}
+
+
 {% block title %}
-Home
+Search
 {% endblock %}
 
 
 {% block content %}
     <h3>What do you want to learn?</h3>
     <br>
-    <form action = "" method = "get">
-        <input id="search" type="text" name="search">
-        <input type="submit" value="Search">
-    </form>
-    <br>
-    <div class="row">
-        {% for v in videos %}
-        {% cycle "<div class='row'>" "" %}
-        <div class="col-sm-6">
-            <div class="card border-primary mb-3">
-                <div class="card-body">
-                   <iframe width="500" height="300" style="border: 5px solid blue" src="{{v}}"></iframe>
-                    <br>
-                   <button type="button" class="btn btn-primary">Add</button>
+    <div class="search">
+        <form action="" method="get">
+            <input id="search" type="text" name="search">
+            <input type="submit" value="Search">
+        </form>
+        <br>
+    </div>
+    
+    <div class="album py-5">
+        <div class="container">
+            <div class="row">
+                {% for v in videos %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-lg">
+                        <iframe width="auto" height="auto" src="{{v}}" frameborder="0"
+                            allowfullscreen></iframe>
+                        <div class="card-body">
+                            <p class="card-text">{{ video.title }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a type="button" href="link.com"
+                                        class="btn btn-sm btn-outline-secondary">Add To List</a>
+                                </div>
+                                <small class="text-muted">12 mins</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
-        {% cycle "" "</div>" %}
-        {% endfor %}
+    </div>
 {% endblock %}

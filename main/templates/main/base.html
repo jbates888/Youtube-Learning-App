@@ -1,23 +1,29 @@
-{% load static %}
+<!doctype html>
+<html lang="en">
 
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+      <link rel="stylesheet" href="{% static "css/style.css" %}">
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
       
-      <script src="https://kit.fontawesome.com/1575f87ca9.js" crossorigin="anonymous"></script>
-      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+      <style>
+        * {
+          font-family: 'Nunito', sans-serif;
+        }
+      </style>
 
       <title>{% block title %}Learning app{% endblock %}</title>
   </head>
 
-  <body>
+  <div class="container">
     <!--Main Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <a class="navbar-brand" href="/">Learning App</a>
@@ -33,26 +39,27 @@
           </li>
     
           <li class="nav-item">
-            <a class="nav-link" href="/create">create a new list</a>
+            <a class="nav-link" href="/create">Create New List</a>
           </li>
         </ul>
       </div>
     </nav>
+  </div>
+  
 
+  <body>
     <!-- Page content -->
     <div class="main" >
       <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-12">
           <h1 class="mt-2">Learning App</h1>
           <hr class="mt-0 mb-4">
           {% block content %}
-          
           {% endblock %}
         </div>
       </div>
     </div>
 
-    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

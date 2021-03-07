@@ -1,4 +1,26 @@
 /* Style page content */
-.main {
-  padding: 100px 100px;
+body {
+  padding-top: 60px;
+  padding: 5%;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+.search {
+  text-align: center;
+  margin: auto;
+  align-items: center;
+}
+
+.create {
+  text-align: center;
+  margin: auto;
+  align-items: center;
 }
