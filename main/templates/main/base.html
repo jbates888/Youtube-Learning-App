@@ -42,6 +42,17 @@
             <a class="nav-link" href="/create">Create New List</a>
           </li>
         </ul>
+      </ul>
+      {% if user.is_authenticated %}
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      {% else %}
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/login">Login/</a></li>
+          <li><a href="/register">Sign Up</a></li>
+        </ul>
+      {% endif %}
       </div>
     </nav>
   </div>
