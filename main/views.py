@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, response
 from django.utils import timezone
 from .models import ToDoList
 from .forms import CreateListForm
@@ -10,85 +10,54 @@ import requests
 from django.conf import settings
 from isodate import parse_duration
 
-
-def index(request, id):
+def index(response, id):
     ls = ToDoList.objects.get(id=id)
 
-    if request.method == "POST":
-        if request.POST.get("save"):
-            for item in ls.item_set.all():
-                p = request.POST
+    if ls in response.user.todolist.all():
+        if response.method == "POST":
+            if response.POST.get("save"):
+                for item in ls.item_set.all():
+                    p = response.POST
 
-                if "clicked" == p.get("c"+str(item.id)):
-                    item.complete = True
+                    if "clicked" == p.get("c"+str(item.id)):
+                        item.complete = True
+                    else:
+                        item.complete = False
+
+                    if "text" + str(item.id) in p:
+                        item.text = p.get("text" + str(item.id))
+
+                    item.save()
+
+            elif response.POST.get("add"):
+                newItem = response.POST.get("new")
+                if newItem != "":
+                    ls.item_set.create(text=newItem, complete=False)
                 else:
-                    item.complete = False
+                    print("invalid")
 
-                if "text" + str(item.id) in p:
-                    item.text = p.get("text" + str(item.id))
+        return render(response, "main/index.html", {"ls": ls})
+    return render(response, "main/home.html", {})
 
-                item.save()
-
-        elif request.POST.get("add"):
-            newItem = request.POST.get("new")
-            if newItem != "":
-                ls.item_set.create(text=newItem, complete=False)
-            else:
-                print("invalid")
-
-    return render(request, "main/index.html", {"ls": ls})
-
-
-def get_name(request):
-    if request.method == "POST":
-        form = CreateListForm(request.POST)
-
+def create(response):
+    if response.method == "POST":
+        form = CreateListForm(response.POST)
         if form.is_valid():
             n = form.cleaned_data["name"]
-            t = ToDoList(name=n, date=timezone.now())
+            t = ToDoList(name=n)
             t.save()
+            response.user.todolist.add(t)
 
-            return HttpResponseRedirect("/%i" % t.id)
-
+            return HttpResponseRedirect("/%i" %t.id)
     else:
         form = CreateListForm()
 
-    return render(request, "main/create.html", {"form": form})
+    return render(response, "main/create.html", {"form":form})
 
 
 def home(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
-
-    # search_params = {
-    # 	'part': 'snippet',
-    # 	'q': 'learn python',
-    # 	'key': settings.YOUTUBE_DATA_API_KEY,
-    # 	'maxResults': 9,
-    # 	'type': 'video',
-    # }
-    #
-    # video_ids = []
-    # r = requests.get(search_url, params=search_params)
-    # results = r.json()['items']
-    #
-    # for result in results:
-    # 	video_ids.append(result['id']['videoId'])
-    #
-    # video_params = {
-    # 	'part': 'snippet,contentDetails',
-    # 	'key': settings.YOUTUBE_DATA_API_KEY,
-    # 	'id': ','.join(video_ids),
-    # 	'maxResults': 9,
-    # 	'type': 'video',
-    # }
-    #
-    # r = requests.get(video_url, params=video_params)
-    # results = r.json()['items']
-
-    # for result in results:
-    # 	print(result['snippet']['title'])
-    # 	print(result['id'])
 
     userSearch = request.GET.get('search', '')
     videos = []
@@ -102,9 +71,8 @@ def home(request):
     return render(request, "main/home.html", {"videos": videos})
 
 
-def view(request):
-    l = ToDoList.objects.all()
-    return render(request, "main/view.html", {"lists": l})
+def view(response):
+    return render(response, "main/view.html", {})
 
 
 def spaceReplace(search):
