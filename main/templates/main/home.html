@@ -7,32 +7,78 @@ Search
 
 
 {% block content %}
-    <h3>What do you want to learn?</h3>
+<h3>What do you want to learn?</h3>
+<br>
+<!--Search Bar-->
+<div class="search">
+    <form action="" method="get">
+        <input id="search" type="text" name="search">
+        <input type="submit" value="Search">
+    </form>
     <br>
-    <div class="search">
-        <form action="" method="get">
-            <input id="search" type="text" name="search">
-            <input type="submit" value="Search">
-        </form>
-        <br>
+</div>
+
+<!--Buttons to add videos to a selected list-->
+<form action="/addVideo/" method="get">
+    <div class="btn-group dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="videoDropDown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Select Videos
+        </button>
+        <!--Populate the drop down with checkboxes for each video-->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% if user.is_authenticated %}
+            {% for a, b, c, d in videos %}
+            <label for="l_box1"><input type="checkbox" name="Checked-Video" value="{{a}}" id="l_box1">Video {{d}}</label>
+            {% endfor %}
+            {% else %}
+            <h3>Login <a href="/login">Here</a></h3>-->
+            <h3>Create Account <a href="/register">Here</a></h3>
+            {% endif %}
+        </div>
     </div>
-    
+
+    <div class="btn-group dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="ListDropDown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Select List
+        </button>
+        <!--Populate the drop down with all of the user's lists-->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% if user.is_authenticated %}
+            {% for l in user.todolist.all %}
+            <label for="l_box2"><input type="radio" name="Checked-List" value="{{l.name}}" id="l_box2">{{l.name}}</label>
+            {% endfor %}
+            {% else %}
+            <h3>Login <a href="/login">Here</a></h3>-->
+            <h3>Create Account <a href="/register">Here</a></h3>
+            {% endif %}
+        </div>
+    </div>
+
+    <!--Save Button-->
+    <div class="btn-group">
+        <button class="btn btn-primary" type="submit" id="dropdownMenuButton" aria-haspopup="true"
+                aria-expanded="false">
+            Save
+        </button>
+    </div>
+
+    <!--Display all of the videos from the search -->
     <div class="album py-5">
         <div class="container">
             <div class="row">
-                {% for v in videos %}
+                {% for a, b in copy %}
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-lg">
-                        <iframe width="auto" height="auto" src="{{v}}" frameborder="0"
-                            allowfullscreen></iframe>
+                        <iframe width="auto" height="auto" src="{{a}}" frameborder="0"
+                                allowfullscreen></iframe>
                         <div class="card-body">
-                            <p class="card-text">{{ video.title }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a type="button" href="link.com"
-                                        class="btn btn-sm btn-outline-secondary">Add To List</a>
+                                    <button type="button"
+                                       class="btn btn-sm btn-outline-secondary" disabled>Video {{b}}</button>
                                 </div>
-                                <small class="text-muted">12 mins</small>
                             </div>
                         </div>
                     </div>
@@ -41,4 +87,5 @@ Search
             </div>
         </div>
     </div>
+</form>
 {% endblock %}
