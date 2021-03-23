@@ -24,3 +24,25 @@ h3 {
   margin: auto;
   align-items: center;
 }
+
+.form {
+  position: relative;
+}
+
+.save-btn {
+  float: right;
+  margin-right: 20px;
+}
+
+.list-drop {
+  float: right;
+  margin-right: 10px;
+}
+
+#l_box1 {
+  align-self: flex-end;
+  margin: 5px;
+  width: 300%;
+}
+
+

@@ -19,28 +19,16 @@ Search
 </div>
 
 <!--Buttons to add videos to a selected list-->
-<form action="/addVideo/" method="get">
-    <div class="btn-group dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="videoDropDown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Select Videos
+<form action="/addVideo/" method="get" class="form">
+    <!--Save Button-->
+    <div class="btn-group save-btn">
+        <button class="btn btn-primary" type="submit" id="dropdownMenuButton" aria-haspopup="true"
+                aria-expanded="false">
+            Save
         </button>
-        <!--Populate the drop down with checkboxes for each video-->
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {% if user.is_authenticated %}
-            {% for a, b, c, d in videos %}
-            <label for="l_box1"><input type="checkbox" name="Checked-Video" value="{{a}}" id="l_box1">Video {{d}}</label>
-            {% endfor %}
-            {% else %}
-            <h3>Login <a href="/login">Here</a></h3>-->
-            <h3>Create Account <a href="/register">Here</a></h3>
-            {% endif %}
-        </div>
     </div>
-
-    <div class="btn-group dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="ListDropDown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+    <div class="btn-group dropdown list-drop">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="ListDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Select List
         </button>
         <!--Populate the drop down with all of the user's lists-->
@@ -54,14 +42,6 @@ Search
             <h3>Create Account <a href="/register">Here</a></h3>
             {% endif %}
         </div>
-    </div>
-
-    <!--Save Button-->
-    <div class="btn-group">
-        <button class="btn btn-primary" type="submit" id="dropdownMenuButton" aria-haspopup="true"
-                aria-expanded="false">
-            Save
-        </button>
     </div>
 
     <!--Display all of the videos from the search -->
@@ -78,6 +58,7 @@ Search
                                 <div class="btn-group">
                                     <button type="button"
                                        class="btn btn-sm btn-outline-secondary" disabled>Video {{b}}</button>
+                                       <label for="l_box1"><input type="checkbox" name="Checked-Video" value="{{a}}" id="l_box1"></label>
                                 </div>
                             </div>
                         </div>
