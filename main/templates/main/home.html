@@ -1,10 +1,8 @@
 {% extends 'main/base.html' %}
 
-
 {% block title %}
 Search
 {% endblock %}
-
 
 {% block content %}
 <h3>What do you want to learn?</h3>
@@ -27,6 +25,7 @@ Search
             Save
         </button>
     </div>
+
     <div class="btn-group dropdown list-drop">
         <button class="btn btn-primary dropdown-toggle" type="button" id="ListDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Select List
@@ -34,9 +33,10 @@ Search
         <!--Populate the drop down with all of the user's lists-->
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% if user.is_authenticated %}
-            {% for l in user.todolist.all %}
-            <label for="l_box2"><input type="radio" name="Checked-List" value="{{l.name}}" id="l_box2">{{l.name}}</label>
-            {% endfor %}
+                {% for l in user.todolist.all %}
+                    <input type="radio" name="Checked-List" value="{{l.name}}" id="l_box2">
+                    <label class="form-check-label" for="flexRadioDefault1">{{l.name}}</label>
+                {% endfor %}
             {% else %}
             <h3>Login <a href="/login">Here</a></h3>-->
             <h3>Create Account <a href="/register">Here</a></h3>

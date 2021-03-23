@@ -39,9 +39,23 @@ h3 {
   margin-right: 10px;
 }
 
+#l_box2 {
+  margin-left: 5px;
+}
+
 #l_box1 {
   margin: 5px;
   width: 300%;
 }
+
+.view-list {
+  border-bottom: 1px solid rgb(184, 184, 184);
+}
+
+.list-link {
+  font-size:3vw;
+  color: rgb(0, 0, 0);
+}
+
 
 
