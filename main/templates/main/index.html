@@ -6,7 +6,6 @@
 	<h2>{{ls.name}}</h2>
 	<form method="post", action="#">
 		{% csrf_token %}
-
 		{% for item in ls.item_set.all%}
 			<div class="input-group mb-3">
 	  			<div class="input-group-prepend">
@@ -15,22 +14,24 @@
 	    			</div>
 	  			</div>
 				{% if item.video %}
-				<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0"
-                                allowfullscreen></iframe>
+					<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0" allowfullscreen></iframe>
 				{% else %}
 					<input type="text" name="text{{item.id}}" value="{{item.text}}" class="form-control" aria-label="Text input with checkbox">
 				{% endif %}
+				<div class="tetx-right">
+					<button type="button" class="btn btn-outline-danger">Delete</button>
+				</div>
 			</div>
 		{% endfor %}
 
 		<div class="input-group mb-3">
 	  		<div class="input-group-prepend">
-	  		<button name="add", value="add", type="submit", class="btn btn-success">Add New</button>
+	  		<button name="add", value="add", type="submit", class="btn btn-primary">Add New</button>
 	  		</div>
 	  		<input type="text" name="new" value="" class="form-control">
 	  		
 		</div>
 		<br>
-		<button name="save", value="save", type="submit", class="btn btn-success">Save</button>
+		<button name="save", value="save", type="submit", class="btn btn-primary">Save</button>
 	</form>
 {% endblock %}

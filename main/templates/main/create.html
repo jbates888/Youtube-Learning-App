@@ -4,17 +4,22 @@ Create New List
 {% endblock %}
 
 {% block content %}
+	{% if user.is_authenticated %}
 	<h3>Create a New To Do List</h3>
-	<br>
-	<div class="create">
-		<form method="post" , action="/create/" class="form-group">
-			{% csrf_token %}
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<button name="save" , type="submit" , class="btn btn-primary">Create</button>
+		<br>
+		<div class="create">
+			<form method="post" , action="/create/" class="form-group">
+				{% csrf_token %}
+				<div class="input-group mb-3 form-create">
+					<div class="input-group-prepend create-btn">
+						<button name="save" , type="submit" , class="btn btn-primary">Create</button>
+					</div>
+					{{form.name}}
 				</div>
-				{{form.name}}
-			</div>
-		</form>
-	</div>
+				
+			</form>
+		</div>
+	{% else %}
+		<h3>Login <a href="/login">Here</a></h3>
+	{% endif %}
 {% endblock %}
