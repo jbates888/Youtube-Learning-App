@@ -33,7 +33,7 @@ def index(response, id):
             elif response.POST.get("add"):
                 newItem = response.POST.get("new")
                 if newItem != "":
-                    ls.item_set.create(text=newItem, complete=False)
+                    ls.item_set.create(text=newItem, complete=False, video=False)
                 else:
                     print("invalid")
 
@@ -52,7 +52,7 @@ def addVideo(response):
         ls = ToDoList.objects.get(name = listName)
         #add all video links to the list and take user to view the list
         for video in videoLinks:
-            ls.item_set.create(text=video, complete=False)
+            ls.item_set.create(text=video, complete=False, video=True)
         return render(response, "main/index.html", {"ls": ls})
 
 

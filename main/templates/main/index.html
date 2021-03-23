@@ -14,7 +14,12 @@
 	      				<input type="checkbox" name="c{{item.id}}" value="clicked" aria-label="Checkbox for following text input" {% if item.complete %} checked {% endif %}>
 	    			</div>
 	  			</div>
-	  			<input type="text" name="text{{item.id}}" value="{{item.text}}" class="form-control" aria-label="Text input with checkbox">
+				{% if item.video %}
+				<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0"
+                                allowfullscreen></iframe>
+				{% else %}
+					<input type="text" name="text{{item.id}}" value="{{item.text}}" class="form-control" aria-label="Text input with checkbox">
+				{% endif %}
 			</div>
 		{% endfor %}
 
