@@ -34,12 +34,14 @@ Search
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% if user.is_authenticated %}
                 {% for l in user.todolist.all %}
-                    <input type="radio" name="Checked-List" value="{{l.name}}" id="l_box2">
-                    <label class="form-check-label" for="flexRadioDefault1">{{l.name}}</label>
+                    <div>
+                        <input type="radio" name="Checked-List" value="{{l.name}}" id="l_box2">
+                        <label class="form-check-label" for="flexRadioDefault1">{{l.name}}</label>
+                    </div>    
                 {% endfor %}
             {% else %}
-            <h3>Login <a href="/login">Here</a></h3>-->
-            <h3>Create Account <a href="/register">Here</a></h3>
+                <h3>Login <a href="/login">Here</a></h3>-->
+                <h3>Create Account <a href="/register">Here</a></h3>
             {% endif %}
         </div>
     </div>

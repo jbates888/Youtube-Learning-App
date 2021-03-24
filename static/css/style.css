@@ -57,5 +57,16 @@ h3 {
   color: rgb(0, 0, 0);
 }
 
+.add-to-list-div {
+  margin-top: 20px;
+}
+
+.delete-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px
+}
+
 
 

@@ -10,6 +10,7 @@ import urllib.request
 import requests
 from django.conf import settings
 from isodate import parse_duration
+from django.contrib import messages
 
 def index(response, id):
     ls = ToDoList.objects.get(id=id)
@@ -19,11 +20,6 @@ def index(response, id):
             if response.POST.get("save"):
                 for item in ls.item_set.all():
                     p = response.POST
-
-                    if "clicked" == p.get("c"+str(item.id)):
-                        item.complete = True
-                    else:
-                        item.complete = False
 
                     if "text" + str(item.id) in p:
                         item.text = p.get("text" + str(item.id))
@@ -53,13 +49,18 @@ def addVideo(response):
         #add all video links to the list and take user to view the list
         for video in videoLinks:
             ls.item_set.create(text=video, complete=False, video=True)
-        return render(response, "main/index.html", {"ls": ls})
+        return render(response, "main/index.html", {"ls": ls,'message': True})
 
+#need to fill out to delete a list
+def deleteList(response):
+    return render(response, "main/create.html", {})
 
 def create(response):
     if response.method == "POST":
         form = CreateListForm(response.POST)
-        if form.is_valid():
+        if form.is_valid() and response.user.todolist.filter(name=form.cleaned_data["name"]).exists():
+            print("list already exists")
+        elif form.is_valid():
             n = form.cleaned_data["name"]
             t = ToDoList(name=n)
             t.save()

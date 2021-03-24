@@ -6,25 +6,23 @@
 	<h2>{{ls.name}}</h2>
 	<form method="post", action="#">
 		{% csrf_token %}
-		{% for item in ls.item_set.all%}
-			<div class="input-group mb-3">
-	  			<div class="input-group-prepend">
-	    			<div class="input-group-text">
-	      				<input type="checkbox" name="c{{item.id}}" value="clicked" aria-label="Checkbox for following text input" {% if item.complete %} checked {% endif %}>
-	    			</div>
-	  			</div>
-				{% if item.video %}
-					<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0" allowfullscreen></iframe>
-				{% else %}
-					<input type="text" name="text{{item.id}}" value="{{item.text}}" class="form-control" aria-label="Text input with checkbox">
-				{% endif %}
-				<div class="tetx-right">
-					<button type="button" class="btn btn-outline-danger">Delete</button>
-				</div>
-			</div>
-		{% endfor %}
+		<ul class="list-group"></ul>
+			{% for item in ls.item_set.all%}
+					<li class="list-group-item">
+						{% if item.video %}
+							<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0" allowfullscreen></iframe>
+						{% else %}
+							 <h2>{{item.text}}</h2>
+						{% endif %}
+						<div class="tetx-right delete-div">
+							<button name="delete", value="delete", type="submit" class="btn btn-outline-danger">Delete</button>
+						</div>
+					</li>
+				
+			{% endfor %}
+		</ul>
 
-		<div class="input-group mb-3">
+		<div class="input-group mb-3 add-to-list-div">
 	  		<div class="input-group-prepend">
 	  		<button name="add", value="add", type="submit", class="btn btn-primary">Add New</button>
 	  		</div>
@@ -34,4 +32,5 @@
 		<br>
 		<button name="save", value="save", type="submit", class="btn btn-primary">Save</button>
 	</form>
+
 {% endblock %}
