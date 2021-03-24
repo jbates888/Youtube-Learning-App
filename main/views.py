@@ -43,7 +43,7 @@ def addVideo(response):
 
     #if either aren't selected then refresh the home page
     if (listName is None) or len(videoLinks) == 0:
-        return redirect('home')
+        return redirect('create')
     else:
         ls = ToDoList.objects.get(name = listName)
         #add all video links to the list and take user to view the list
