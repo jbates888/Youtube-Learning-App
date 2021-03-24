@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, response
 from django.shortcuts import redirect
 from django.utils import timezone
-from .models import ToDoList, CheckBox
+from .models import ToDoList, Item, CheckBox
 from .forms import CreateListForm
 import re
 from pytube import YouTube
@@ -32,6 +32,11 @@ def index(response, id):
                     ls.item_set.create(text=newItem, complete=False, video=False)
                 else:
                     print("invalid")
+            elif response.POST.get("delete"):
+                itemText = response.POST.get("delete")
+                item = ls.item_set.get(id=itemText)
+                print(item.delete())
+                
 
         return render(response, "main/index.html", {"ls": ls})
     return render(response, "main/home.html", {})
@@ -49,11 +54,7 @@ def addVideo(response):
         #add all video links to the list and take user to view the list
         for video in videoLinks:
             ls.item_set.create(text=video, complete=False, video=True)
-        return render(response, "main/index.html", {"ls": ls,'message': True})
-
-#need to fill out to delete a list
-def deleteList(response):
-    return render(response, "main/create.html", {})
+        return render(response, "main/view.html", {"ls": ls,'message': True})
 
 def create(response):
     if response.method == "POST":
@@ -98,6 +99,13 @@ def home(request):
 
 
 def view(response):
+    if response.method == "POST":
+        if response.POST.get("delete"):
+            print("delete list")
+            ls = ToDoList.objects.get(id=response.POST.get("delete"))
+            print(ls.delete())
+            
+
     return render(response, "main/view.html", {})
 
 

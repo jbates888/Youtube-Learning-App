@@ -5,18 +5,21 @@
 
 {% block content %}
 	{% if user.is_authenticated %}
-		<ul class="list-group">
-			{% for l in user.todolist.all %}
-				<li class="d-flex no-block card-body view-list"> <i class="fa fa-check-circle w-30px m-t-5"></i>
-                    <a href="/{{l.id}}" class="m-b-0 font-medium p-0 list-link" data-abc="true">{{l.name}}</a>
-                    <div class="ml-auto">
-                        <div class="tetx-right">
-                            <button name="delete" value="delete" type="submit" class="btn btn-outline-danger">Delete</button>
-                        </div>
-                    </div>
-                </li>
-			{% endfor %}
-		</ul>
+		<form method="post", action="#">
+			{% csrf_token %}
+			<ul class="list-group">
+				{% for l in user.todolist.all %}
+					<li class="d-flex no-block card-body view-list"> <i class="fa fa-check-circle w-30px m-t-5"></i>
+						<a href="/{{l.id}}" class="m-b-0 font-medium p-0 list-link" data-abc="true">{{l.name}}</a>
+						<div class="ml-auto">
+							<div class="tetx-right">
+								<button name="delete", value={{l.id}} type="submit" class="btn btn-outline-danger">Delete</button>
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</form>
 	{% else %}
 		<h3>Login <a href="/login">Here</a></h3>
 	{% endif %}
