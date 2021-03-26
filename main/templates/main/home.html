@@ -70,5 +70,13 @@ Search
             </div>
         </div>
     </div>
+
+    <!--Display all websites from the search-->
+    <ul class="list-group list-group-flush">
+        {% for link, title in sites %}
+        <a href="{{link}}" target="_blank" class="list-group-item list-group-item-action">{{title}}<label for="l_box3"><input type="checkbox" name="Checked-Site" value="{{title}}/{{link}}" id="l_box3"></label></a>
+        {% endfor %}
+    </ul>
+
 </form>
 {% endblock %}

@@ -11,10 +11,12 @@
 					<li class="list-group-item">
 						{% if item.video %}
 							<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0" allowfullscreen></iframe>
+						{% elif item.website %}
+							<a href="{{item.siteLink}}" target="_blank">{{item.text}}</a>
 						{% else %}
-							 <h2>{{item.text}}</h2>
+							 <h5>{{item.text}}</h5>
 						{% endif %}
-						<div class="tetx-right delete-div">
+						<div class="text-right delete-div">
 							<button name="delete", value={{item.id}} type="submit" class="btn btn-outline-danger">Delete</button>
 						</div>
 					</li>

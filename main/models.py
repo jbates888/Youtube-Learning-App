@@ -16,6 +16,8 @@ class Item(models.Model):
 	text = models.CharField(max_length = 300)
 	complete = models.BooleanField()
 	video = models.BooleanField()
+	website = models.BooleanField(default = False)
+	siteLink = models.CharField(max_length = 1000)
 
 	def __str__(self):
 		return self.text

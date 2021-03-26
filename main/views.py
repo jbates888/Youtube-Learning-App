@@ -7,10 +7,13 @@ from .forms import CreateListForm
 import re
 from pytube import YouTube
 import urllib.request
+from googlesearch import search
 import requests
 from django.conf import settings
 from isodate import parse_duration
 from django.contrib import messages
+from bs4 import BeautifulSoup
+import validators
 
 def index(response, id):
     ls = ToDoList.objects.get(id=id)
@@ -36,8 +39,6 @@ def index(response, id):
                 itemText = response.POST.get("delete")
                 item = ls.item_set.get(id=itemText)
                 print(item.delete())
-                
-
         return render(response, "main/index.html", {"ls": ls})
     return render(response, "main/home.html", {})
 
@@ -45,15 +46,24 @@ def addVideo(response):
     #get the list of selected video links and selected list
     videoLinks = response.GET.getlist("Checked-Video")
     listName = response.GET.get("Checked-List")
+    siteLinks = response.GET.getlist("Checked-Site")
 
     #if either aren't selected then refresh the home page
-    if (listName is None) or len(videoLinks) == 0:
+    if (listName is None) or (len(videoLinks) == 0 and len(siteLinks) == 0):
         return redirect('create')
     else:
         ls = ToDoList.objects.get(name = listName)
-        #add all video links to the list and take user to view the list
+        #add all video links to the list
         for video in videoLinks:
-            ls.item_set.create(text=video, complete=False, video=True)
+            ls.item_set.create(text=video, complete=False, video=True, website=False)
+
+        #add all website links and their title to the list
+        for link in siteLinks:
+            title = link.split("/")[0]
+            link = link.split("/")[1]
+            ls.item_set.create(text=title, complete=False, video=False, siteLink=link, website=True)
+
+        #take user to view the current list
         return render(response, "main/view.html", {"ls": ls,'message': True})
 
 def create(response):
@@ -77,14 +87,30 @@ def create(response):
 def home(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
+
     #create two arrays of boxes, one for the videos and one for the lists, array of indexes
     vidBoxes, listBoxes, indexs = [], [], []
     for i in range(9):
         vidBoxes.append(CheckBox())
         listBoxes.append(CheckBox())
-        indexs.append(i)
+        indexs.append(i + 1)
 
     userSearch = request.GET.get('search', '')
+
+    # get websites related to the search
+    results = search(userSearch, num_results = 25)
+    newResults = []
+    for t in results:
+        soup = BeautifulSoup('"{}"'.format(t[1]))
+        #get the tile from the <h3> tag
+        title = soup.get_text()
+        valid = validators.url(t[0])
+        #confirm that the url is valid
+        if valid:
+            newResults.append((t[0], title))
+        else:
+            print("Invalid url")
+
     videos = []
     vidCopy = []
     if userSearch != '':
@@ -95,7 +121,8 @@ def home(request):
             fullLink = "https://www.youtube.com/embed/" + videoIDS[i]
             videos.append(fullLink)
             vidCopy.append(fullLink)
-    return render(request, "main/home.html", {"videos": zip(videos, vidBoxes, listBoxes, indexs), "copy": zip(vidCopy, indexs)})
+
+    return render(request, "main/home.html", {"videos": zip(videos, vidBoxes, listBoxes, indexs), "copy": zip(vidCopy, indexs), "sites": newResults})
 
 
 def view(response):
@@ -104,7 +131,6 @@ def view(response):
             print("delete list")
             ls = ToDoList.objects.get(id=response.POST.get("delete"))
             print(ls.delete())
-            
 
     return render(response, "main/view.html", {})
 
