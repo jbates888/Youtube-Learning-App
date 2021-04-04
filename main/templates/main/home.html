@@ -58,9 +58,10 @@ Search
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button"
-                                       class="btn btn-sm btn-outline-secondary" disabled>Video {{b}}</button>
-                                       <label for="l_box1"><input type="checkbox" name="Checked-Video" value="{{a}}" id="l_box1"></label>
+                                    <h4>Video Title</h4>
+                                    <label for="l_box1">
+                                        <input type="checkbox" name="Checked-Video" value="{{a}}" id="l_box1">
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -71,10 +72,16 @@ Search
         </div>
     </div>
 
+    <!--Display text results title if there are any text reaults-->
+    {% if sites %}
+        <h3 class="text_results_title">Text Results</h3>
+    {% endif %}
+
     <!--Display all websites from the search-->
     <ul class="list-group list-group-flush">
         {% for link, title in sites %}
-        <a href="{{link}}" target="_blank" class="list-group-item list-group-item-action">{{title}}<label for="l_box3"><input type="checkbox" name="Checked-Site" value="{{title}}/{{link}}" id="l_box3"></label></a>
+            <input class="link_check" type="checkbox" name="Checked-Site" value="{{title}}/{{link}}" id="l_box3">
+            <a href="{{link}}" target="_blank" class="list-group-item list-group-item-action">{{title}}</a>
         {% endfor %}
     </ul>
 

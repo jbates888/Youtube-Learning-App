@@ -99,7 +99,7 @@ def home(request):
     userSearch = request.GET.get('search', '')
 
     # get websites related to the search
-    results = search(userSearch, num_results = 25)
+    results = search(userSearch, num_results = 15)
     newResults = []
     for t in results:
         soup = BeautifulSoup('"{}"'.format(t[1]))
