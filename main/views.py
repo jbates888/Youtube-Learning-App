@@ -9,7 +9,7 @@ from .forms import CreateListForm
 import re
 import urllib.request
 from english_words import english_words_set
-from spellchecker import SpellChecker
+#from spellchecker import SpellChecker
 import random
 import json
 import requests
@@ -167,7 +167,7 @@ def spaceReplace(search):
     temp = "https://www.youtube.com/results?search_query=" + "learn" + search
     return temp
 
-def search(term, num_results=10, lang="en"):
+def search(term, num_results=8, lang="en"):
     usr_agent = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/61.0.3163.100 Safari/537.36'}
