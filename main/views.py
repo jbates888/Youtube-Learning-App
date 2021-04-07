@@ -77,7 +77,6 @@ def create(response):
             t = ToDoList(name=n)
             t.save()
             response.user.todolist.add(t)
-
             return HttpResponseRedirect("/%i" %t.id)
     else:
         form = CreateListForm()
@@ -127,13 +126,18 @@ def home(request):
 
 
 def view(response):
+    message = False
     if response.method == "POST":
         if response.POST.get("delete"):
             print("delete list")
-            ls = ToDoList.objects.get(id=response.POST.get("delete"))
-            print(ls.delete())
+            try:
+                ls = ToDoList.objects.get(id=response.POST.get("delete"))
+                message = True
+                ls.delete()
+            except:
+                print("list already deleted")
 
-    return render(response, "main/view.html", {})
+    return render(response, "main/view.html", {'message_name': message})
 
 
 def spaceReplace(search):

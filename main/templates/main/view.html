@@ -5,6 +5,14 @@
 
 {% block content %}
 	{% if user.is_authenticated %}
+		{% if message_name %}
+			<div class="alert alert-dark alert-dismissible fade show" role="alert">
+			<strong>List has been removed.</strong> 
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+		{% endif %}
 		<form method="post", action="#">
 			{% csrf_token %}
 			<ul class="list-group">
