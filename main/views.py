@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, response
 from django.shortcuts import redirect
@@ -5,9 +7,11 @@ from django.utils import timezone
 from .models import ToDoList, Item, CheckBox
 from .forms import CreateListForm
 import re
-from pytube import YouTube
 import urllib.request
-# from googlesearch import search
+from english_words import english_words_set
+from spellchecker import SpellChecker
+import random
+import json
 import requests
 from django.conf import settings
 from isodate import parse_duration
@@ -96,22 +100,28 @@ def home(request):
         indexs.append(i + 1)
 
     userSearch = request.GET.get('search', '')
+    print(userSearch)
 
     # get websites related to the search
-    results = search(userSearch, num_results = 15)
+    results = search(userSearch, num_results = 50)
+
     newResults = []
     for t in results:
-        soup = BeautifulSoup('"{}"'.format(t[1]))
-        #get the tile from the <h3> tag
-        title = soup.get_text()
-        valid = validators.url(t[0])
-        #confirm that the url is valid
-        if valid:
-            newResults.append((t[0], title))
+        if random.choice([0, 1]) == 1:
+            results.remove(t)
         else:
-            print("Invalid url")
+            soup = BeautifulSoup('"{}"'.format(t[1]), features = "html.parser")
+            #get the tile from the <h3> tag
+            title = soup.get_text()
+            valid = validators.url(t[0])
+            #confirm that the url is valid
+            if valid:
+                newResults.append((t[0], title))
+            else:
+                print("Invalid url")
 
     videos = []
+    titles = []
     vidCopy = []
     if userSearch != '':
         url = spaceReplace(userSearch)
@@ -119,10 +129,21 @@ def home(request):
         videoIDS = re.findall(r"watch\?v=(\S{11})", html.read().decode())
         for i in range(9):
             fullLink = "https://www.youtube.com/embed/" + videoIDS[i]
+
+            params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % videoIDS[i]}
+            url = "https://www.youtube.com/oembed"
+            query_string = urllib.parse.urlencode(params)
+            url = url + "?" + query_string
+
+            with urllib.request.urlopen(url) as response:
+                response_text = response.read()
+                data = json.loads(response_text.decode())
+                titles.append(data['title'])
+
             videos.append(fullLink)
             vidCopy.append(fullLink)
 
-    return render(request, "main/home.html", {"videos": zip(videos, vidBoxes, listBoxes, indexs), "copy": zip(vidCopy, indexs), "sites": newResults})
+    return render(request, "main/home.html", {"videos": zip(videos, vidBoxes, listBoxes, indexs), "copy": zip(vidCopy, indexs, titles), "sites": newResults})
 
 
 def view(response):
@@ -168,7 +189,7 @@ def search(term, num_results=10, lang="en"):
             link = result.find('a', href=True)
             title = result.find('h3')
             if link and title:
-                yield (link['href'], title)
+                yield link['href'], title
 
     html = fetch_results(term, num_results, lang)
     return list(parse_results(html))
