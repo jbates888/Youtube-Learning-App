@@ -44,6 +44,7 @@ def index(response, id):
                 itemText = response.POST.get("delete")
                 item = ls.item_set.get(id=itemText)
                 print(item.delete())
+
         return render(response, "main/index.html", {"ls": ls})
     return render(response, "main/home.html", {})
 
@@ -52,6 +53,7 @@ def addVideo(response):
     videoLinks = response.GET.getlist("Checked-Video")
     listName = response.GET.get("Checked-List")
     siteLinks = response.GET.getlist("Checked-Site")
+    print(siteLinks)
 
     #if either aren't selected then refresh the home page
     if (listName is None) or (len(videoLinks) == 0 and len(siteLinks) == 0):
@@ -64,9 +66,11 @@ def addVideo(response):
 
         #add all website links and their title to the list
         for link in siteLinks:
-            title = link.split("/")[0]
-            link = link.split("/")[1]
-            ls.item_set.create(text=title, complete=False, video=False, siteLink=link, website=True)
+            link = link.partition("(/)")
+            title = link[0]
+            weblink = link[2]
+            print(weblink + "\n")
+            ls.item_set.create(text=title, complete=False, video=False, siteLink=weblink, website=True)
 
         #take user to view the current list
         return render(response, "main/view.html", {"ls": ls, 'message': True})
@@ -104,21 +108,35 @@ def home(request):
 
     # get websites related to the search
     results = search(userSearch, num_results = 50)
-
+    chosenIndexes = []
+    try:
+        chosenIndexes = random.sample(range(1, int(len(results)/2)), 10)
+    except ValueError:
+        print("Sample size exceeded population size")
     newResults = []
-    for t in results:
-        if random.choice([0, 1]) == 1:
-            results.remove(t)
+    for x in chosenIndexes:
+        soup = BeautifulSoup('"{}"'.format((results[x])[1]), features = "html.parser")
+        # get the tile from the <h3> tag
+        title = soup.get_text()
+        valid = validators.url((results[x])[0])
+        # confirm that the url is valid
+        if valid:
+            newResults.append(((results[x])[0], title))
         else:
-            soup = BeautifulSoup('"{}"'.format(t[1]), features = "html.parser")
-            #get the tile from the <h3> tag
-            title = soup.get_text()
-            valid = validators.url(t[0])
-            #confirm that the url is valid
-            if valid:
-                newResults.append((t[0], title))
-            else:
-                print("Invalid url")
+            print("Invalid url")
+    # for t in results:
+    #     if random.choice([0, 1]) == 1:
+    #         results.remove(t)
+    #     else:
+    #         soup = BeautifulSoup('"{}"'.format(t[1]), features = "html.parser")
+    #         #get the tile from the <h3> tag
+    #         title = soup.get_text()
+    #         valid = validators.url(t[0])
+    #         #confirm that the url is valid
+    #         if valid:
+    #             newResults.append((t[0], title))
+    #         else:
+    #             print("Invalid url")
 
     videos = []
     titles = []

@@ -80,7 +80,7 @@ Search
     <!--Display all websites from the search-->
     <ul class="list-group list-group-flush">
         {% for link, title in sites %}
-            <input class="link_check" type="checkbox" name="Checked-Site" value="{{title}}/{{link}}" id="l_box3">
+            <input class="link_check" type="checkbox" name="Checked-Site" value="{{title}}(/){{link}}" id="l_box3">
             <a href="{{link}}" target="_blank" class="list-group-item list-group-item-action">{{title}}</a>
         {% endfor %}
     </ul>
