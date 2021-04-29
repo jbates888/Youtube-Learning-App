@@ -12,14 +12,28 @@
 					<li class="list-group-item">
 						{% if item.video %}
 							<iframe width="auto" height="auto" src="{{item.text}}" frameborder="0" allowfullscreen></iframe>
+							<div class="text-right delete-div">
+								<a href="https://www.facebook.com/sharer/sharer.php?u={{item.text}}" class="fa fa-facebook"></a>
+								<a href="http://www.reddit.com/submit?url={{item.text}}/&title=I'm%20going%20to%20learn%20this!%20" class="fa fa-reddit"></a>
+								<a href="https://www.linkedin.com/shareArticle?mini=true&url={{item.text}}&title=I'm%20going%20to%20learn%20this!%20&source={{item.text}}" class="fa fa-linkedin"></a>
+								<button name="delete", value={{item.id}} type="submit" class="btn btn-outline-danger">Delete</button>
+							</div>
 						{% elif item.website %}
-							<a href="{{item.siteLink}}" target="_blank">{{item.text}}</a>
+							<a href="{{item.siteLink}}" target="_blank" class="list_item">{{item.text}}</a>
+							<div class="text-right delete-div">
+								<a href="https://www.facebook.com/sharer/sharer.php?u={{item.siteLink}}" class="fa fa-facebook"></a>
+								<a href="http://www.reddit.com/submit?url={{item.siteLink}}/&title=I'm%20going%20to%20learn%20this!%20" class="fa fa-reddit"></a>
+								<a href="https://www.linkedin.com/shareArticle?mini=true&url={{item.siteLink}}&title=I'm%20going%20to%20learn%20this!%20&source={{item.siteLink}}" class="fa fa-linkedin"></a>
+								<button name="delete", value={{item.id}} type="submit" class="btn btn-outline-danger">Delete</button>
+							</div>
 						{% else %}
 							 <h5>{{item.text}}</h5>
+							 <div class="text-right delete-div">
+								<button name="delete", value={{item.id}} type="submit" class="btn btn-outline-danger">Delete</button>
+							</div>
 						{% endif %}
-						<div class="text-right delete-div">
-							<button name="delete", value={{item.id}} type="submit" class="btn btn-outline-danger">Delete</button>
-						</div>
+							
+						
 					</li>
 				
 			{% endfor %}
