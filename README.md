@@ -19,12 +19,12 @@
  Some non-standerd libraries we use are "bs4" which is for parsing websites. "reqquests" for sending GET requests to scrape web data.
  "json" for formating data from requests. "english_words" for spell checking user input. 
  
- 1. Type in: CD cd .\mysite\
- 2. Type in: pip install -r requirements.txt 
+ 1. Type in: pip install -r requirements.txt 
  
  iv) detailed instructions on how to run your project
  
  Make sure your still in the .\mysite\ directory
  
- 1. Type in: python manage.py runserver
- 2. Click the link to open the website on local host
+ 1. Type in: cd .\mysite\
+ 2. Type in: python manage.py runserver
+ 3. Click the link to open the website on local host
