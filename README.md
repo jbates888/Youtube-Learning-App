@@ -12,7 +12,7 @@
  
  1. Download the zip file
  2. Extract the files contnets
- 3. Open the folder in an IDE
+ 3. Open the folder in an IDE or move to it on the command line
  
  iii) details of any non-standard libraries needed and how to install them
  
@@ -21,6 +21,8 @@
  
  1. Type in: cd .\mysite\
  2. Type in: pip install -r requirements.txt 
+ 3. pip install BuestifulSoup
+ 4. pip install validators
  
  iv) detailed instructions on how to run your project
  
