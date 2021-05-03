@@ -1,15 +1,17 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
-from .models import ToDoList, CheckBox
-from .forms import CreateListForm
+import json
+import random
 import re
 import urllib.request
-import random
-import json
-from bs4 import BeautifulSoup
+
 import validators
+from bs4 import BeautifulSoup
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from requests import get
+
+from .forms import CreateListForm
+from .models import CheckBox, ToDoList
+
 
 #give users options to modify a list
 def index(response, id):
