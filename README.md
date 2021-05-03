@@ -17,7 +17,7 @@
  iii) details of any non-standard libraries needed and how to install them
  
  Some non-standerd libraries we use are "bs4" which is for parsing websites. "reqquests" for sending GET requests to scrape web data.
- "json" for formating data from requests. "english_words" for spell checking user input. 
+ "json" for formating data from requests. 
  
  1. Type in: cd .\mysite\
  2. Type in: pip install -r requirements.txt 

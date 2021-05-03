@@ -1,7 +1,7 @@
 from django.urls import path
-
 from . import views
 
+#list of urls for redirecting users
 urlpatterns = [
 	path("<int:id>", views.index, name = "index"),
 	path("", views.home, name = "home"),
