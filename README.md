@@ -1,27 +1,27 @@
 # Youtube-Learning-App
 
- i) names of all team members and a brief description of the project
+ # Authors
  
- Jack Bates, AJ Thut, Wyatt Southard
+ Jack Bates, AJ Thut
  
  This is a tool to help people learn a new skill. Users can type in what they want to learn and 
  they are given various resources from Youtube and Google to teach them. They can make lists and store their
  reults in them to orgainze things aswell.
  
- ii) How to install 
+ # How to install 
  
  1. Download the zip file
  2. Extract the files contents
  3. Open the folder in an IDE or move to the YouTupeProj directory on the command line
  
- iii) details of any non-standard libraries needed and how to install them
+ # details of any non-standard libraries needed and how to install them
  
  Some non-standerd libraries we use are "bs4" which is for parsing websites. "requests" for sending GET requests to scrape web data.
  "json" for formating data from requests. 
  
  1. cd to the .\mysite\ folder. There are two folders with this name, you should be in the higher level one which holds every other source folder
  2. Type in: pip install -r requirements.txt to install all the librires
- 3. If you get en error when running that states a package cannot be found, run pip install [Missing package name] to install it (we had some issues with the requirements file)
+ 3. If you get en error when running that states a package cannot be found, run pip install [Missing package name] to install it
  
  iv) How to run the project
  
