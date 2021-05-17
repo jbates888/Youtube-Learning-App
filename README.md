@@ -23,7 +23,7 @@
  2. Type in: pip install -r requirements.txt to install all the librires
  3. If you get en error when running that states a package cannot be found, run pip install [Missing package name] to install it
  
- iv) How to run the project
+ # How to run the project
  
  Make sure your still in the .\mysite\ directory
  
